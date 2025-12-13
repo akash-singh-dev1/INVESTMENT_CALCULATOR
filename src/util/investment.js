@@ -4,23 +4,61 @@
 // - annualInvestment: The amount invested every year
 // - expectedReturn: The expected (annual) rate of return
 // - duration: The investment duration (time frame)
-export function calculateInvestmentResults({
+
+//........START of helper function..................
+
+//Calculate yearly interest.
+function calculateYearlyInterest(currentValue, rate) {
+  return currentValue * (rate / 100);
+}
+
+//Calculate invested capital.
+function calculateInvestedCapital(initialInvestment, yearlyInvestment, year) {
+  return initialInvestment + yearlyInvestment * year;
+}
+
+//Normalize inputs (defensive & pure)
+function normalizeInvestmentInputs({
   initialInvestment,
   annualInvestment,
   expectedReturn,
   duration,
 }) {
-  const annualData = [];
-  let investmentValue = initialInvestment;
+  return {
+    initialInvestment: Number(initialInvestment),
+    annualInvestment: Number(annualInvestment),
+    expectedReturn: Number(expectedReturn),
+    duration: Number(duration),
+  };
+}
+//...........END of helper function...............
 
-  for (let i = 0; i < duration; i++) {
-    const interestEarnedInYear = investmentValue * (expectedReturn / 100);
-    investmentValue += interestEarnedInYear + annualInvestment;
+export function calculateInvestmentResults(investmentInfo) {
+  const { initialInvestment, annualInvestment, expectedReturn, duration } =
+    normalizeInvestmentInputs(investmentInfo);
+
+  const annualData = [];
+
+  let investmentValue = initialInvestment;
+  let totalInterest = 0;
+
+  for (let year = 1; year <= duration; year++) {
+    const interest = calculateYearlyInterest(investmentValue, expectedReturn);
+
+    totalInterest += interest;
+    investmentValue += interest + annualInvestment;
+
     annualData.push({
-      year: i + 1, // year identifier
-      interest: interestEarnedInYear, // the amount of interest earned in this year
-      valueEndOfYear: investmentValue, // investment value at end of year
-      annualInvestment: annualInvestment, // investment added in this year
+      year: year,
+      interest: interest,
+      totalInterest: totalInterest,
+      valueEndOfYear: investmentValue,
+      annualInvestment: annualInvestment,
+      investedCapital: calculateInvestedCapital(
+        initialInvestment,
+        annualInvestment,
+        year
+      ),
     });
   }
 
@@ -29,10 +67,10 @@ export function calculateInvestmentResults({
 
 // The browser-provided Intl API is used to prepare a formatter object
 // This object offers a "format()" method that can be used to format numbers as currency
-// Example Usage: formatter.format(1000) => yields "$1,000"
-export const formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 0,
+// Example Usage: formatter.format(1000) => yields "₹1,000"
+export const INRFormatter = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
 });

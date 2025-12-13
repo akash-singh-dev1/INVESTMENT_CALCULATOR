@@ -1,24 +1,59 @@
 import "./UserInput.css";
 
-const UserInput = () => {
+const UserInput = ({ investmentInfo, onChangeInvestment }) => {
+  /*function to handle investmentInfo using two way binding.
+  Generic handler for all inputs. */
+  const handleInvestmentInfo = (event) => {
+    const { id, value } = event.target;
+
+    onChangeInvestment((prevInfo) => ({
+      ...prevInfo,
+      [id]: value, // dynamic key update
+    }));
+  };
+
   return (
     <div id="user-input-container">
       <div className="input-group">
         <div>
-          <label forHtml="INITIAL INVESTMENT">INITIAL INVESTMENT</label>
-          <input type="number" id="INITIAL INVESTMENT" min={1} />
+          <label htmlFor="initialInvestment">INITIAL INVESTMENT</label>
+          <input
+            type="number"
+            id="initialInvestment"
+            min={1}
+            value={investmentInfo.initialInvestment}
+            onChange={handleInvestmentInfo}
+          />
         </div>
         <div>
-          <label forHtml="ANNUAL INVESTMENT">ANNUAL INVESTMENT</label>
-          <input type="number" id="ANNUAL INVESTMENT" min={1} />
+          <label htmlFor="annualInvestment">ANNUAL INVESTMENT</label>
+          <input
+            type="number"
+            id="annualInvestment"
+            min={1}
+            value={investmentInfo.annualInvestment}
+            onChange={handleInvestmentInfo}
+          />
         </div>
         <div>
-          <label forHtml="EXPECTED RETURN">EXPECTED RETURN</label>
-          <input type="number" id="EXPECTED RETURN" min={1} />
+          <label htmlFor="expectedReturn">EXPECTED RETURN</label>
+          <input
+            type="number"
+            id="expectedReturn"
+            min={1}
+            value={investmentInfo.expectedReturn}
+            onChange={handleInvestmentInfo}
+          />
         </div>
         <div>
-          <label forHtml="DURATION">DURATION</label>
-          <input type="number" id="DURATION" min={1} />
+          <label htmlFor="duration">DURATION</label>
+          <input
+            type="number"
+            id="duration"
+            min={1}
+            value={investmentInfo.duration}
+            onChange={handleInvestmentInfo}
+          />
         </div>
       </div>
     </div>
