@@ -4,8 +4,14 @@ const UserInput = ({ investmentInfo, onChangeInvestment }) => {
   /*function to handle investmentInfo using two way binding.
   Generic handler for all inputs. */
   const handleInvestmentInfo = (event) => {
-    const { id, value } = event.target;
+    const { id, value, min, max } = event.target;
+    //only show result if the input value are valid under min max range.
+    if (Number(value) < Number(min) || Number(value) > Number(max)) {
+      window.alert(`the range of ${id} is not under preferd range`);
+      return;
+    }
 
+    // in this function we are not change the string value to number because Number("")=0 ;
     onChangeInvestment((prevInfo) => ({
       ...prevInfo,
       [id]: value, // dynamic key update
@@ -20,7 +26,8 @@ const UserInput = ({ investmentInfo, onChangeInvestment }) => {
           <input
             type="number"
             id="initialInvestment"
-            min={1}
+            min={0}
+            max={1000000}
             value={investmentInfo.initialInvestment}
             onChange={handleInvestmentInfo}
           />
@@ -30,7 +37,8 @@ const UserInput = ({ investmentInfo, onChangeInvestment }) => {
           <input
             type="number"
             id="annualInvestment"
-            min={1}
+            min={0}
+            max={100000}
             value={investmentInfo.annualInvestment}
             onChange={handleInvestmentInfo}
           />
@@ -40,7 +48,8 @@ const UserInput = ({ investmentInfo, onChangeInvestment }) => {
           <input
             type="number"
             id="expectedReturn"
-            min={1}
+            min={0}
+            max={30}
             value={investmentInfo.expectedReturn}
             onChange={handleInvestmentInfo}
           />
@@ -50,7 +59,8 @@ const UserInput = ({ investmentInfo, onChangeInvestment }) => {
           <input
             type="number"
             id="duration"
-            min={1}
+            min={0}
+            max={80}
             value={investmentInfo.duration}
             onChange={handleInvestmentInfo}
           />
