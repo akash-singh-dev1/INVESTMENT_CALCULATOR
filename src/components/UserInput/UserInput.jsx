@@ -24,6 +24,7 @@ const UserInput = ({ investmentInfo, onChangeInvestment }) => {
         <div>
           <label htmlFor="initialInvestment">INITIAL INVESTMENT</label>
           <input
+            placeholder="range(0-1000000)"
             type="number"
             id="initialInvestment"
             min={0}
@@ -35,6 +36,7 @@ const UserInput = ({ investmentInfo, onChangeInvestment }) => {
         <div>
           <label htmlFor="annualInvestment">ANNUAL INVESTMENT</label>
           <input
+            placeholder="range(0-100000)"
             type="number"
             id="annualInvestment"
             min={0}
@@ -46,6 +48,7 @@ const UserInput = ({ investmentInfo, onChangeInvestment }) => {
         <div>
           <label htmlFor="expectedReturn">EXPECTED RETURN</label>
           <input
+            placeholder="range(0-30)"
             type="number"
             id="expectedReturn"
             min={0}
@@ -57,6 +60,7 @@ const UserInput = ({ investmentInfo, onChangeInvestment }) => {
         <div>
           <label htmlFor="duration">DURATION</label>
           <input
+            placeholder="range(0-80)"
             type="number"
             id="duration"
             min={0}

@@ -35,3 +35,8 @@
   color: #c2e9e0;
   font-size: 1rem;
 }
+
+.input-group input::placeholder {
+  color: white;
+  opacity: 0.5;
+}
